@@ -1,0 +1,65 @@
+/account:
+  post:
+    tags: [Account]
+    summary: Create an new account (registration)
+    responses:
+      200:
+        description: the created user object
+      400:
+        $ref: '#/components/responses/BadRequest'
+  patch:
+    tags: [Account]
+    summary: Update own account
+    responses:
+      200:
+        description: the updated user object
+      400:
+        $ref: '#/components/responses/BadRequest'
+      401:
+        description: Not authorized (session invalid or not logged in)
+  get:
+    tags: [Account]
+    summary: get the current user that is logged in
+    responses:
+      200:
+        description: the current user object
+      400:
+        $ref: '#/components/responses/BadRequest'
+      401:
+        description: Not authorized (session invalid or not logged in)
+/account/password:
+  patch:
+    tags: [Account]
+    summary: Change password of the current user
+    content: 
+      application/json:
+        schema:
+          $ref: '#/definitions/PasswordChangeBody'
+    responses:
+      200:
+        description: success
+        content: 
+          application/json:
+            schema:
+              type: object
+              $ref: '#/definitions/SuccessMessage'
+      400:
+        $ref: '#/components/responses/BadRequest'
+/account/verify/email:
+  post:
+    tags: [Account]
+    summary: Verify registration email by providing token send by email
+    content: 
+      application/json:
+        schema:
+          $ref: '#/definitions/VerificationBody'
+    responses:
+      200:
+        description: success
+        content: 
+          application/json:
+            schema:
+              type: object
+              $ref: '#/definitions/SuccessMessage'
+      400:
+        $ref: '#/components/responses/BadRequest'

@@ -1,0 +1,71 @@
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        _id:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+        lastModifiedOn:
+          type: string
+          format: date-time
+        removedOn:
+          type: string
+          format: date-time
+    BadRequestError:
+      type: object
+      required:
+        - error
+        - i18n
+      properties:
+        error:
+          type: string
+        i18n:
+          type: string
+        details:
+          type: object
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+        i18n:
+          type: string
+    AccessDeniedError:
+      type: object
+      properties:
+        error:
+          type: string
+        i18n:
+          type: string
+  responses:
+    AccessDenied:
+      description: You are not allowed to call this endpoint
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/AccessDeniedError'
+    Unauthorized:
+      description: You are not authorized to call this endpoint, please login.
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthorizedError'
+    BadRequest:
+      description: An error occured. The request was malformed
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/BadRequestError'
+  parameters:
+  examples:
+  requestBodies:
+  headers:
+  securitySchemes:
+  links:
+  callbacks:

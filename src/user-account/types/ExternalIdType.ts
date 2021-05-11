@@ -1,0 +1,1 @@
+type ExternalIdType = 'steam64';

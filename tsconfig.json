@@ -1,0 +1,17 @@
+{
+	"extends": "@tsconfig/node14/tsconfig.json",
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["src/*"]
+		},
+		"sourceMap": true /* Generates corresponding '.map' file. */,
+		"outDir": "./dist" /* Redirect output structure to the directory. */,
+		"strictNullChecks": false /* Enable strict null checks. */,
+		/* Module Resolution Options */
+		"moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
+		"baseUrl": "./" /* Base directory to resolve non-absolute module names. */,
+		"experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
+		"emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */
+	},
+	"exclude": ["node_modules", "dist"]
+}

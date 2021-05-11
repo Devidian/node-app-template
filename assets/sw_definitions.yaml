@@ -1,0 +1,26 @@
+definitions:
+  SuccessMessage:
+    required:
+      - success
+    properties:
+      success:
+        type: boolean
+  VerificationBody:
+    required:
+      - email
+      - token
+    properties:
+      email:
+        type: string
+      token:
+        type: string
+  PasswordChangeBody:
+    required:
+      - password
+      - newpassword
+    properties:
+      password:
+        type: string
+      newpassword:
+        type: string
+  

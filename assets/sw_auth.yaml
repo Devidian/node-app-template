@@ -1,0 +1,30 @@
+/auth/login:
+  post:
+    tags: [Auth]
+    summary: Login (authentification request)
+    responses:
+      200:
+        description: the found user object
+      400:
+        $ref: '#/components/responses/BadRequest'
+/auth/logout:
+  get:
+    tags: [Auth]
+    summary: Logout (end session request)
+    responses:
+      200:
+        description: the current user object
+        content:
+          application/json: {}
+      400:
+        $ref: '#/components/responses/BadRequest'
+      401:
+        $ref: '#/components/responses/Unauthorized'
+/auth/steam:
+  get:
+    tags: [Auth]
+    summary: Redirect to steam
+    description: Redirect to steam openid login
+    responses:
+      302:
+        description: redirect to steam
