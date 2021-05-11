@@ -1,4 +1,4 @@
-import { BaseRepository, DatabaseCollection, ExtendedLogger, MongoCollection } from '@/util';
+import { BaseRepository, DatabaseCollection, ExtendedLogger, MongoCollection } from '@/utils';
 import { UserAccountEntity } from '../entities/user-account.entity';
 
 class UserAccountRepository extends BaseRepository<UserAccountEntity> {

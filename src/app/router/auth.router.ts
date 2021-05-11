@@ -1,7 +1,7 @@
 import express = require('express');
 import { UserAccountEntity, userAccountService } from '@/user-account';
 import { accountController } from '@/user-account/controllers/user-account.controller';
-import { Environment, EnvVars } from '@/util';
+import { Environment, EnvVars } from '@/utils';
 import { RequestHandler } from 'express';
 import { sign } from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';

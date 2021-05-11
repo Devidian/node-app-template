@@ -1,5 +1,5 @@
 import { UserAccountEntity, userAccountService } from '@/user-account';
-import { ExtendedLogger, MongoDB } from '@/util';
+import { ExtendedLogger, MongoDB } from '@/utils';
 import { MongoClient } from 'mongodb';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';

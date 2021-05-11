@@ -1,4 +1,4 @@
-import { ExtendedLogger } from '@/util';
+import { ExtendedLogger } from '@/utils';
 import { validate } from 'class-validator';
 import { RequestHandler } from 'express';
 import { UserAccountEntity } from '../entities/user-account.entity';

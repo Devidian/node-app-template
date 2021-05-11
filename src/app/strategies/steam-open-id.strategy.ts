@@ -1,6 +1,6 @@
 import { UserAccountEntity, userAccountService } from '@/user-account';
 import { userAccountRepository } from '@/user-account/repositories/user-account.repository';
-import { Environment, EnvVars } from '@/util';
+import { Environment, EnvVars } from '@/utils';
 import { Strategy } from 'passport-steam';
 
 export const SteamOpenIDStrategy = new Strategy(

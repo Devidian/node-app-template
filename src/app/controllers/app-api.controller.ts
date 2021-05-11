@@ -1,5 +1,5 @@
 import { accountApp } from '@/user-account';
-import { ExtendedLogger } from '@/util';
+import { ExtendedLogger } from '@/utils';
 import { NextFunction, Request, Response } from 'express';
 import { Express } from 'express-serve-static-core';
 import { authRouter } from '../router/auth.router';

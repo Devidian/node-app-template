@@ -1,4 +1,4 @@
-import { Environment, EnvVars } from '@/util';
+import { Environment, EnvVars } from '@/utils';
 import { ExtractJwt, Strategy, StrategyOptions } from 'passport-jwt';
 
 // Passport Strategies

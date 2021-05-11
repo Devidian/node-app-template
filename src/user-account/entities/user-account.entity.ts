@@ -1,8 +1,8 @@
 import { IsEmail, IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { hostname } from 'os';
 import { cpuUsage } from 'process';
-import { MongoCollection } from '../../util';
-import { BaseEntity } from '../../util/entities/base.entity';
+import { MongoCollection } from '../../utils';
+import { BaseEntity } from '../../utils/entities/base.entity';
 
 // import { userCollection } from "./user-account.collection";
 

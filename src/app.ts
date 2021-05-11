@@ -1,6 +1,6 @@
 'use strict';
 import { fork, isMaster, worker, Worker } from 'cluster';
-import { Environment, EnvVars, Logger, Loglevel } from './util/without-mongo';
+import { Environment, EnvVars, Logger, Loglevel } from './utils/without-mongo';
 const logger = new Logger('app');
 
 process.title = isMaster ? 'Master' : `Worker${worker.id}`;
