@@ -6,6 +6,8 @@
 * connect-mongo         # session Store in mongodb
 * passport              # user-authentification
  + passport-local       # local auth
+ + passport-jwt         # jwt auth
+ + passport-steam       # steam auth
 * cors                  # CORS settings in express
 * socket.io             # WebSocket connections
 * rxjs                  # reactivity
@@ -16,16 +18,21 @@
 * class-validator       # for DTO's
 * class-transformer     # transform plain json into real objects
  + reflect-metadata     # dep of class-transformer
+* module-alias          # @ links for imports
 
 #dev-dependencies
 * @types/express
 * @types/express-session
-* @types/mongodb
 - @types/mongoose       # just a fix for 'connect-mongo' requireing this in type definitions
 * @types/node
 * @types/passport
 * @types/socket.io
 * @types/swagger-ui-express
+* jest
+* ts-node
+* ts-node-dev
+* tsconfig-paths
+* typescript
 ```
 
 # project structure (WIP)
@@ -54,6 +61,7 @@ MONGO_APPNAME=APP
 
 SENDGRID=
 MAIL_FROM=no-reply@app.com
+# MAIL_SUBJECT_* deprecated in the future
 MAIL_SUBJECT_VERIFICATION=Welcome, please verify!
 MAIL_SUBJECT_WELCOME=Welcome Fighter
 MAIL_SUBJECT_BETA=New User Registration for Beta Access
@@ -64,14 +72,19 @@ OID_STEAM_KEY=
 OID_STEAM_RETURN=http://localhost:8080/
 
 COOKIE_DOMAIN=localhost
-
-LOGLEVEL=0
-LOGCOLOR=true
+COOKIE_ORIGINS="*:*"
+# App level settings
+PORT=9080
+HOST="0.0.0.0"
+APP_LOG_LEVEL=0
+APP_LOG_COLOR=1
+APP_LOG_DB=1
+APP_LOG_WS=1
 ```
 
 # Docker
 ## Local development
 ```ps
-docker build -t app-backend .
-docker run -dp 8090:8090 app-backend
+docker build . -t node-app-backend
+docker run -dp 8090:8090 node-app-backend
 ```
