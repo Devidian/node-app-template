@@ -3,13 +3,15 @@ import { UserAccountEntity } from '../entities/user-account.entity';
 
 class UserAccountRepository extends BaseRepository<UserAccountEntity> {
 	@DatabaseCollection<UserAccountEntity>('user', UserAccountEntity, false, [
-		{ key: { name: 1 }, name: 'userUniqueNameIndex', background: true, unique: true },
+		{ spec: { name: 1 }, options: { name: 'userUniqueNameIndex', background: true, unique: true } },
 		{
-			key: { email: 1 },
-			name: 'userUniqueEmailIndex',
-			background: true,
-			unique: true,
-			partialFilterExpression: { $and: [{ email: { $exists: true } }, { email: { $gt: null } }] },
+			spec: { email: 1 },
+			options: {
+				name: 'userUniqueEmailIndex',
+				background: true,
+				unique: true,
+				partialFilterExpression: { $and: [{ email: { $exists: true } }, { email: { $gt: null } }] },
+			},
 		},
 	])
 	protected collectionRef: MongoCollection<UserAccountEntity>;

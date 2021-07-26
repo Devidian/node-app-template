@@ -1,4 +1,12 @@
 ## [Unreleased]
 
+## [0.2.0] - 2021-07-26
+### Changed
+- updated dependencies
+- [breaking] mongodb driver to 4.x
+- node version from 14.x to 16.x
+### Removed
+- `@types/mongodb`
+
 ## [0.1.0] - 2020-06-30
 ### Initial

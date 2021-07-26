@@ -1,8 +1,7 @@
 import { IsEmail, IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { hostname } from 'os';
 import { cpuUsage } from 'process';
-import { MongoCollection } from '../../utils';
-import { BaseEntity } from '../../utils/entities/base.entity';
+import { MongoCollection, BaseEntity } from '@/utils';
 
 // import { userCollection } from "./user-account.collection";
 
@@ -80,7 +79,6 @@ export class UserAccountEntity extends BaseEntity {
 
 		return plain;
 	}
-
 
 	public validatePassword(password: string): boolean {
 		return MongoCollection.hash256(password) === this.password;
