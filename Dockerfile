@@ -1,24 +1,27 @@
 # ============== build stage ==================
-FROM node:14 as builder
+FROM node:16 as build-stage
 
 WORKDIR /app
 
-COPY "./" "/app/"
+COPY package.json ./
+COPY yarn.lock ./
 
 RUN yarn
+
+COPY . .
+
+ENV NODE_ENV=production
 RUN yarn build
 
 # ============== runtime stage ================
-FROM node:14-alpine as runtime
+FROM node:16-alpine as runtime
 
 WORKDIR /app
 
-ENV NODE_ENV=production
+COPY --from=build-stage "/app/dist/" "/app/dist"
+COPY --from=build-stage "/app/assets/" "/app/assets"
+COPY --from=build-stage "/app/package.json" "/app/package.json"
 
-COPY --from=builder "/app/dist/" "/app/dist"
-COPY --from=builder "/app/assets/" "/app/assets"
-COPY --from=builder "/app/package.json" "/app/package.json"
-
-RUN yarn --production
+RUN yarn install --only=production
 
 CMD ["yarn","start:prod"]

@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+## [0.3.0] - 2021-07-26
+### Changed
+- `sendgrid` to `@sendgrid/mail`
+- `Dockerfile` updated to Node 16
+- node types updated to v16.x
+### Removed
+- `@types/mongoose`
 ## [0.2.0] - 2021-07-26
 ### Changed
 - updated dependencies

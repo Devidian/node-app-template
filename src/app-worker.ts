@@ -1,10 +1,12 @@
 'use strict';
 import MongoStore from 'connect-mongo';
+import cors from 'cors';
 import express, { Errback, Express, NextFunction, Request, Response } from 'express';
 import { createServer, Server as HttpServer } from 'http';
 import { first } from 'rxjs/operators';
 import { Server as IoServer, Server, Socket } from 'socket.io';
 import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 import { AppAPIController } from './app/controllers/app-api.controller';
 import { AppWebsocketController } from './app/controllers/app-websocket.controller';
 import { mongoClient } from './utils';
@@ -12,8 +14,6 @@ import { AppInfo, Environment, EnvVars, Logger } from './utils/without-mongo';
 import passport = require('passport');
 import exsession = require('express-session');
 import cookieParser = require('cookie-parser');
-const cors = require('cors');
-const swaggerUi = require('swagger-ui-express');
 const logger = new Logger('app');
 
 function bootstrapAPI(app: Express) {
@@ -28,7 +28,7 @@ function bootstrapWebSocket(ioServer: Server) {
 function persist(fn: Function, req: Request) {
 	return function () {
 		// @ts-ignore
-		var self:any = this;
+		var self: any = this;
 		if (!req.session) return fn.apply(self, arguments);
 
 		var args = arguments;
@@ -42,7 +42,7 @@ function persist(fn: Function, req: Request) {
 }
 
 export async function initWorker() {
-	const clientPromise = mongoClient.pipe(first(f=>!!f)).toPromise();
+	const clientPromise = mongoClient.pipe(first((f) => !!f)).toPromise();
 	const swaggerDefinition = {
 		openapi: '3.0.0',
 		info: {

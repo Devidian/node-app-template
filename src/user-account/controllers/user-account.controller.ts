@@ -95,7 +95,6 @@ class Controller {
 			res.status(200).send(response).end();
 		};
 	}
-
 }
 
 export const accountController = new Controller();

@@ -1,15 +1,15 @@
 'use strict';
-import { fork, isMaster, worker, Worker } from 'cluster';
+import cluster, { Worker } from 'cluster';
 import { Environment, EnvVars, Logger, Loglevel } from './utils/without-mongo';
 const logger = new Logger('app');
 
-process.title = isMaster ? 'Master' : `Worker${worker.id}`;
+process.title = cluster.isPrimary ? 'Master' : `Worker${cluster.worker.id}`;
 logger.info(`Starting process`);
 logger.info(`Loglevel <${Loglevel[Environment.getNumber(EnvVars.APP_LOG_LEVEL)]}>`);
 logger.debug(`Log to database <${Environment.getBoolean(EnvVars.APP_LOG_DB)}>`);
 logger.debug(`Log to websocket <${Environment.getBoolean(EnvVars.APP_LOG_WS)}>`);
 
-if (isMaster) {
+if (cluster.isPrimary) {
 	let c: Worker = null;
 	function createWorker(code?: number, signal?: string) {
 		if (c) {
@@ -17,7 +17,7 @@ if (isMaster) {
 			c.removeAllListeners();
 			c.destroy();
 		}
-		c = fork();
+		c = cluster.fork();
 		c.addListener('exit', createWorker);
 	}
 	createWorker();

@@ -1,16 +1,12 @@
+import { BaseEntity, MongoCollection } from '@/utils';
 import { IsEmail, IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { hostname } from 'os';
 import { cpuUsage } from 'process';
-import { MongoCollection, BaseEntity } from '@/utils';
-
-// import { userCollection } from "./user-account.collection";
 
 export class UserAccountEntity extends BaseEntity {
 	@IsNotEmpty()
 	@Length(3)
 	name: string;
-
-	// tag: number = Math.floor(Math.random()*10000);
 
 	password: string; // SHA256
 

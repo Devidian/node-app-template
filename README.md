@@ -13,7 +13,7 @@
 * rxjs                  # reactivity
 * swagger-ui-express    # swagger
  + swagger-jsdoc        # creating doc for swagger
-* sendgrid              # for sending emails
+* @sendgrid/mail        # for sending emails
 * mongodb               # Database
 * class-validator       # for DTO's
 * class-transformer     # transform plain json into real objects
@@ -23,7 +23,6 @@
 #dev-dependencies
 * @types/express
 * @types/express-session
-- @types/mongoose       # just a fix for 'connect-mongo' requireing this in type definitions
 * @types/node
 * @types/passport
 * @types/socket.io
