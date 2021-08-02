@@ -26,23 +26,20 @@ class Controller {
 				.then((err) => {
 					if (err && err.length > 0) {
 						const errShort = err.map(({ property, constraints }) => ({ property, constraints }));
-						res
-							.status(400)
-							.send({
-								error: 'ERROR.VALIDATION.FAILED',
-								i18n: I18nPrefix.ERROR + '.VALIDATION.FAILED',
-								details: errShort,
-							})
-							.end();
+						res.status(400).send({
+							error: 'ERROR.VALIDATION.FAILED',
+							i18n: I18nPrefix.ERROR + '.VALIDATION.FAILED',
+							details: errShort,
+						});
 					} else {
-						res.send(userAccount.plain(true)).end();
+						res.send(userAccount.toPlain(['owner']));
 					}
 				})
 				.catch((r: Error & { details: any }) => {
-					res
-						.status(400)
-						.send({ error: r.message, i18n: I18nPrefix.ERROR + r.message, details: r.details })
-						.end();
+					res.status(400).send({ error: r.message, i18n: I18nPrefix.ERROR + r.message, details: r.details });
+				})
+				.finally(() => {
+					res.end();
 				});
 		};
 	}
@@ -52,7 +49,7 @@ class Controller {
 			const user: UserAccountEntity = req.user as UserAccountEntity;
 			const { account: userAcountUpdateDto } = req.body;
 			await this.service.updateAccount(user, userAcountUpdateDto);
-			res.send(user.plain(true)).end();
+			res.send(user.toPlain(['owner'])).end();
 		};
 	}
 
@@ -84,14 +81,14 @@ class Controller {
 			const user: UserAccountEntity = req.user as UserAccountEntity;
 			// TODO change password here
 			// console.log(req.body);
-			res.send(user.plain(true)).end();
+			res.send(user.toPlain(['owner'])).end();
 		};
 	}
 
 	public getAccount(): RequestHandler {
 		return async (req, res) => {
 			const user: UserAccountEntity = req.user as UserAccountEntity;
-			const response = user?.plain(true);
+			const response = user?.toPlain(['owner']);
 			res.status(200).send(response).end();
 		};
 	}

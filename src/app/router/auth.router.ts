@@ -1,6 +1,5 @@
 import express = require('express');
 import { UserAccountEntity, userAccountService } from '@/user-account';
-import { accountController } from '@/user-account/controllers/user-account.controller';
 import { Environment, EnvVars } from '@/utils';
 import { RequestHandler } from 'express';
 import { sign } from 'jsonwebtoken';
@@ -36,10 +35,16 @@ passport.use(JWTStrategy);
 
 const sendAccountHandler: RequestHandler = (req, res) => {
 	const user: UserAccountEntity = req.user as UserAccountEntity;
+	const plain = user.toPlain(['owner']);
+
+	const token = sign({ data: plain }, Environment.getString(EnvVars.APP_SALT, 'd3f4ul75a1tf0rjw7T0k3n'), {
+		expiresIn: '7d',
+	});
+	res.setHeader('x-refresh-token', token);
 	res
 		.send({
-			user: user.plain(true),
-			token: sign({ data: user.plain(false) }, Environment.getString(EnvVars.APP_SALT), { expiresIn: '7d' }),
+			user: user.toPlain(['owner']),
+			token,
 		})
 		.end();
 };
@@ -56,8 +61,14 @@ app.get('/logout', (req, res) => {
 app.get('/steam', passport.authenticate('steam'));
 
 app.get('/steam/return', passport.authenticate('steam'), (req, res) => {
+	const user: UserAccountEntity = req.user as UserAccountEntity;
+	const plain = user.toPlain(['owner']);
+
 	// Successful authentication, redirect home.
-	res.redirect(Environment.getString(EnvVars.OID_STEAM_RETURN, ''));
+	const jwt = sign({ data: plain }, Environment.getString(EnvVars.APP_SALT, 'd3f4ul75a1tf0rjw7T0k3n'), {
+		expiresIn: '60s',
+	});
+	res.redirect(Environment.getString(EnvVars.OID_STEAM_RETURN, '') + `?jwt=${jwt}`);
 });
 
 export const authRouter = app;

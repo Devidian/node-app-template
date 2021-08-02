@@ -78,7 +78,7 @@ export class AppWebsocketController implements WebSocketManager {
 			const user = (socket.data.user = await userAccountService.findById(data.id));
 			if (!user) return;
 
-			socket.emit(WebSocketEvents.USER_WELCOME, user.plain(true));
+			socket.emit(WebSocketEvents.USER_WELCOME, user.toPlain(['owner']));
 			this.userSocketMap.set(user.id, socket);
 		});
 	}

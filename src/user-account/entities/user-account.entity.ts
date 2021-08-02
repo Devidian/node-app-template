@@ -1,4 +1,6 @@
 import { BaseEntity, MongoCollection } from '@/utils';
+import { Default } from '@/utils/decorators/default.decorator';
+import { Exclude, Expose } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { hostname } from 'os';
 import { cpuUsage } from 'process';
@@ -8,18 +10,21 @@ export class UserAccountEntity extends BaseEntity {
 	@Length(3)
 	name: string;
 
+	@Exclude({ toPlainOnly: true })
 	password: string; // SHA256
 
 	@IsOptional() // in case of openid we may not have an email on registration
 	@IsEmail()
+	@Expose({ groups: ['owner', 'admin'] })
 	email: string;
 
 	@IsOptional()
 	country: string;
 
+	@Exclude({ toPlainOnly: true })
 	verification: VerificationEntity[] = [];
 
-	// OpenId
+	@Expose({ groups: ['owner', 'admin'] })
 	steam: {
 		id: string;
 		identifier: string;
@@ -35,45 +40,28 @@ export class UserAccountEntity extends BaseEntity {
 	 * @type {string}
 	 * @memberof UserAccountEntity
 	 */
+	@Expose()
 	public get avatarUrl(): string {
 		return this.avatarLargeUrl || this.avatarMediumUrl || this.avatarSmallUrl;
 	}
 
+	@Expose()
 	public get avatarSmallUrl(): string {
 		return this.steam?.photos[0]?.value;
 	}
 
+	@Expose()
 	public get avatarMediumUrl(): string {
 		return this.steam?.photos[1]?.value;
 	}
 
+	@Expose()
 	public get avatarLargeUrl(): string {
 		return this.steam?.photos[2]?.value;
 	}
 
 	public get isEmailVerified(): boolean {
 		return !!this.verification.find((v) => v.field == 'email' && v.verifiedOn != null);
-	}
-
-	/**
-	 * returns a clean plain object representing a user account without sensitive data
-	 *
-	 * @param showPrivate if true, private data will be exposed too
-	 */
-	public plain(showPrivate: boolean = false): { [key: string]: any } {
-		const plain: { [key: string]: any } = super.plain(showPrivate);
-
-		plain.name = this.name;
-		// registration email is always a private property and only exposed to owner
-		plain.email = showPrivate ? this.email : null;
-		// password is never send
-		plain.password = null;
-
-		plain.country = this.country;
-
-		plain.steam = this.steam;
-
-		return plain;
 	}
 
 	public validatePassword(password: string): boolean {

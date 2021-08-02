@@ -14,7 +14,7 @@ export const SteamOpenIDStrategy = new Strategy(
 		if (!profile.id) {
 			return done(new Error('ERROR.INVALID.STEAM.API.KEY'));
 		}
-		if (!userAccountRepository?.isReady) {
+		if (!(await userAccountRepository?.isReady)) {
 			return done(new Error('ERROR.DB.NOCOLLECTION'));
 		}
 		const user: UserAccountEntity | null = await userAccountService.findBySteamIdentifier(identifier);

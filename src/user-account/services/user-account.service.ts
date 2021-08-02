@@ -116,13 +116,14 @@ class UserAccountService {
 					'{{PH_USERNAME}}',
 					newAccount?.name + '',
 				);
-				await sendEmail(
-					Environment.getString('MAIL_FROM', 'readonly@example.com'),
-					'spawn@app.com',
-					Environment.getString('MAIL_SUBJECT_BETA') || 'New BETA account created',
-					body,
-					'text/html',
-				);
+				// TODO setup email on registration correctly
+				// await sendEmail(
+				// 	Environment.getString('MAIL_FROM', 'readonly@example.com'),
+				// 	'spawn@app.com',
+				// 	Environment.getString('MAIL_SUBJECT_BETA') || 'New BETA account created',
+				// 	body,
+				// 	'text/html',
+				// );
 				// let body = readFileSync(AppInfo.cwd() + "/assets/templates/email.welcome.html", { encoding: 'utf-8' })
 				// .replace('{{PH_TEST}}', 'Welcome');
 				// await sendEmail(Environment.getString('MAIL_FROM') || 'readonly@example.com', user.email, Environment.getString('MAIL_SUBJECT_WELCOME') || 'Email verification', body, 'text/html');

@@ -7,7 +7,7 @@ import { first } from 'rxjs/operators';
 import { Server as IoServer, Server, Socket } from 'socket.io';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { AppAPIController } from './app/controllers/app-api.controller';
+import { APIController } from './app/controllers/app-api.controller';
 import { AppWebsocketController } from './app/controllers/app-websocket.controller';
 import { mongoClient } from './utils';
 import { AppInfo, Environment, EnvVars, Logger } from './utils/without-mongo';
@@ -17,11 +17,11 @@ import cookieParser = require('cookie-parser');
 const logger = new Logger('app');
 
 function bootstrapAPI(app: Express) {
-	new AppAPIController(app);
+	APIController.init(app);
 }
 
 function bootstrapWebSocket(ioServer: Server) {
-	new AppWebsocketController(ioServer, []);
+	return new AppWebsocketController(ioServer, []);
 }
 
 // https://github.com/nkzawa/socket.io-bundle/blob/master/lib/session.js

@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+## [0.4.0] - 2021-08-02
+### Added
+- `NotInitializedException`
+### Changed
+- `JWTStrategy` can now be used to login
+- `UserAccountEntity` now exposes avatar url's
+
 ## [0.3.0] - 2021-07-26
 ### Changed
 - `sendgrid` to `@sendgrid/mail`
